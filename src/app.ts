@@ -2,7 +2,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import multer from 'multer';
 import appRouter from './routes/appRoutes';
-import path from 'path'
+import path from 'path';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -12,7 +12,7 @@ const upload = multer();
 app.use(upload.any());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, '..', 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use("/api", appRouter);
 // API Demo

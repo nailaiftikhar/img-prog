@@ -1,11 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ImgProg</title>
-</head>
-<body>
-    <h1>Welcome to ImgProg Api!!</h1>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Prog</title>
+  </head>
+  <body>
+    <h1>Image Upload and Retrieval Demo</h1>
+
+    <!-- Image Upload Form -->
+    <form id="imageUploadForm" enctype="multipart/form-data">
+      <input type="file" name="images" multiple />
+      <button type="submit">Upload Images</button>
+    </form>
+
+    <!-- List Uploaded Images -->
+    <h2>Uploaded Images:</h2>
+    <ul id="imageList"></ul>
+
+    <script>
+      // Function to list uploaded images
+      const listImages = async () => {
+        try {
+          const response = await fetch("/api/img-prog/retrieve");
+          const images = await response.json();
+          const imageList = document.getElementById("imageList");
+
+          imageList.innerHTML = ""; // Clear previous list
+
+          if (images.length === 0) {
+            imageList.innerHTML = "<li>No images found.</li>";
+          } else {
+            images.forEach((image) => {
+              const li = document.createElement("li");
+              const img = document.createElement("img");
+              img.src = image.url;
+              img.alt = image.filename;
+              li.appendChild(img);
+              imageList.appendChild(li);
+            });
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      // Initial image listing
+      listImages();
+      document
+        .getElementById("imageUploadForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const formData = new FormData(e.target);
+
+          try {
+            const response = await fetch("/api/img-prog/upload", {
+              method: "POST",
+              body: formData,
+            });
+
+            if (response.ok) {
+              alert("Images uploaded successfully!");
+              listImages();
+            } else {
+              alert("Error uploading images.");
+            }
+          } catch (error) {
+            console.error(error);
+            alert("An error occurred while uploading images.");
+          }
+        });
+    </script>
+  </body>
 </html>

@@ -12,7 +12,7 @@ class ImgProgController {
   uploadImages = async (req: Request, res: Response): Promise<void> => {
     try {
       const uploadedImages: Express.Multer.File[] = req.files as Express.Multer.File[];
-      const transformations: TransformationFeatures = JSON.parse(req.body.transformations || '{}');;
+      const transformations: TransformationFeatures = JSON.parse(req.body.transformations || '{}');
       const images: Image[] = [];
 
       for (const file of uploadedImages) {
@@ -51,6 +51,25 @@ class ImgProgController {
       res.json(images);
     } else {
       res.status(404).json({ error: 'Image not found' });
+    }
+  }
+
+  async retrieveAllImages(req: Request, res: Response): Promise<void> {
+    try {
+      const allImagesMap = imgStorage.getAllImages();
+      const allImages: Image[] = [];
+      for (const [, images] of allImagesMap) {
+        allImages.push(...images);
+      }
+  
+      if (allImages.length > 0) {
+        res.json(allImages);
+      } else {
+        res.status(404).json({ error: 'No images found' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
     }
   }
 }
