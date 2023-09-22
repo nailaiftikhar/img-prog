@@ -18,7 +18,7 @@ A minimum viable product (MVP) of a service with the following features:
 - Run `npm i`
 - Run `npm run dev`
 The service should now be running at `http://localhost:3000`. There is an upload and retrieve demo on the specified url. Can be tested via UI as well.
-![Frontend sample](image.png)
+![Frontend sample](public/info/image.png)
 
 ## API Endpoints
 ### Upload (Bulk) Images with transformation
@@ -33,7 +33,7 @@ The service should now be running at `http://localhost:3000`. There is an upload
 }
 
 ```
-![Postman post request sample screenshot](image-1.png)
+![Postman post request sample screenshot](public/info/image-1.png)
 
 ### Retrieve All Images
 - GET `/api/img-prog/retrieve``
@@ -47,7 +47,7 @@ The service should now be running at `http://localhost:3000`. There is an upload
 To run tests, use the following command:
 `npm run test`
 
-![Run tests output](image-2.png)
+![Run tests output](public/info/image-2.png)
 ## Future Enhancements
 
 While the Image Prog MVP is functional, there are several areas for potential future enhancements and improvements:
